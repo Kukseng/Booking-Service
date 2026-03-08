@@ -30,16 +30,16 @@ public class OrderService {
             Order order = createOrder(bookingEvent);
             log.info("Saving Order to database...");
             orderRepository.saveAndFlush(order);
-            log.info("✅ Order created successfully with ID: {}", order.getId());
+            log.info(" Order created successfully with ID: {}", order.getId());
 
             // Update Inventory - this should reduce the capacity
             log.info("Calling Inventory Service to reduce capacity...");
             inventoryServiceClient.updateInventory(order.getEventId(), order.getTicketCount());
-            log.info("✅ Inventory updated for event: {}, reduced capacity by: {}", order.getEventId(), order.getTicketCount());
+            log.info("Inventory updated for event: {}, reduced capacity by: {}", order.getEventId(), order.getTicketCount());
             
             log.info("========== Order processing COMPLETED successfully ==========");
         } catch (Exception e) {
-            log.error("❌ Failed to process booking event: {}", bookingEvent, e);
+            log.error("Failed to process booking event: {}", bookingEvent, e);
             throw new RuntimeException("Failed to process order", e);
         }
     }

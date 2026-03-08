@@ -33,11 +33,11 @@ public class BookingServiceImpl implements BookingService {
         log.info("userId: {}, eventId: {}, ticketCount: {}", request.userId(), request.eventId(), request.ticketCount());
 
         Customer customer = customerRepository.findById(request.userId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
-        log.info("✅ Customer found: {}", customer.getName());
+        log.info(" Customer found: {}", customer.getName());
 
 //        checking inventory event
         InventoryResponse inventoryResponse = inventoryServiceClient.getInventory(request.eventId());
-        log.info("✅ Inventory Response: {}", inventoryResponse);
+        log.info(" Inventory Response: {}", inventoryResponse);
         if (inventoryResponse == null) {
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
                     "Inventory service unavailable or returned null response");
@@ -66,9 +66,9 @@ public class BookingServiceImpl implements BookingService {
             log.info("Sending BookingEvent to Kafka topic 'booking'...");
             log.info("BookingEvent details: {}", bookingEvent);
             KafkaTemplate.send("booking", bookingEvent);
-            log.info("✅ BookingEvent sent to Kafka successfully!");
+            log.info(" BookingEvent sent to Kafka successfully!");
         } catch (Exception e) {
-            log.warn("❌ Error sending booking event to Kafka (proceeding with booking): {}", e.getMessage());
+            log.warn(" Error sending booking event to Kafka (proceeding with booking): {}", e.getMessage());
         }
         
         log.info("========== BOOKING RESPONSE CREATED ==========");
