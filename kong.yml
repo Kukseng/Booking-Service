@@ -1,0 +1,19 @@
+_format_version: "3.0"
+
+# 1. Define your backend services
+services:
+  - name: booking-service
+    url: http://booking-service:8081
+    routes:
+      - name: booking-route
+        paths:
+          - /api/v1/booking
+        strip_path: false
+
+  - name: inventory-service
+    url: http://inventory-service:8082
+    routes:
+      - name: inventory-route
+        paths:
+          - /api/v1/inventory
+        strip_path: false
